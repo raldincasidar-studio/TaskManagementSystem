@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "4+vQikOBlI40EGhoMypUlaa37ub3ZCYPNYAnRHW0hyLctQb6rXXqQSUG6np5JG4EYVdaCWwXTTIaFPRT+P6NpA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Raldin Casidar\\Desktop\\TaskManagementSystem\\TaskManagementSystem.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Raldin Casidar\\.nuget\\packages\\nstack.core\\1.1.1\\nstack.core.1.1.1.nupkg.sha512",
+    "C:\\Users\\Raldin Casidar\\.nuget\\packages\\spectre.console\\0.48.0\\spectre.console.0.48.0.nupkg.sha512",
+    "C:\\Users\\Raldin Casidar\\.nuget\\packages\\spectre.console.cli\\0.48.0\\spectre.console.cli.0.48.0.nupkg.sha512",
+    "C:\\Users\\Raldin Casidar\\.nuget\\packages\\system.codedom\\8.0.0\\system.codedom.8.0.0.nupkg.sha512",
+    "C:\\Users\\Raldin Casidar\\.nuget\\packages\\system.management\\8.0.0\\system.management.8.0.0.nupkg.sha512",
+    "C:\\Users\\Raldin Casidar\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\Raldin Casidar\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
+    "C:\\Users\\Raldin Casidar\\.nuget\\packages\\terminal.gui\\1.16.0\\terminal.gui.1.16.0.nupkg.sha512"
+  ],
+  "logs": []
+}
