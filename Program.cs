@@ -129,7 +129,7 @@ public static class Program
 			table.Title = new TableTitle("[lime]Undone Task[/]");
 
 			// Add some columns
-			table.AddColumn("[yellow]Order[/]");
+			table.AddColumn("[yellow]Priority Order[/]");
 			table.AddColumn("[yellow]Status[/]");
 			table.AddColumn("[yellow]Task Name[/]");
 			table.AddColumn("[yellow]Category[/]");
@@ -277,7 +277,75 @@ public static class Program
 
 				}
 			}
+
+			if (otherAction == "Set Priority Order") {
+				// Ask for the user's favorite fruit
+
+				List<string> choices = new List<string>();
+
+				foreach(var task in taskList)
+				{
+					choices.Add(task.name);
+					
+				}
+
+				choices.Add("Go Back");
+
+				string actionToMarkDone = AnsiConsole.Prompt(
+					new SelectionPrompt<string>()
+						.Title("\nWhich task would you like to [red]MOVE PRIORITY[/]?")
+						.PageSize(10)
+						.MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
+						.AddChoices(choices.ToArray()));
+
+				if (actionToMarkDone != "Go Back") {
+					
+					for (int i = 0; i < taskList.Count; i++) 
+					{
+						if (taskList[i].name == actionToMarkDone) {
+							
+							var new_index = Convert.ToInt32(AnsiConsole.Ask<string>($"Input priority number: [yellow](1-{taskList.Count})[/]?")) - 1;
+							var item = taskList[i];
+
+							taskList.RemoveAt(i);
+
+							// if (new_index > i) new_index--; 
+							// the actual index could have shifted due to the removal
+
+							taskList.Insert(new_index, item);
+							break;
+						}
+						
+					}
+
+					notification_message = "Successfuly changed priority!";
+
+				}
+			}
 		}
+
+		if (actions == "About this Program") {
+			
+			AnsiConsole.Markup("\n\n");
+			var panel6 = new Panel($"[green]This Task Management was made by [yellow]Raldin Casidar[/]. Raldin Casidar is a student at JRMSU Main Campus and this project is made in compliance to the Final Project of sir [yellow]Edgardo Olmoguez[/]. \n \nPlease contact me at [yellow]raldin.disomimba13@gmail.com[/] if you seen any problem.[/]");
+			panel6.Header = new PanelHeader("About this Program");
+			panel6.Padding = new Padding(1, 1, 1, 1);
+			panel6.Expand = true;
+			AnsiConsole.Write(panel6);
+			AnsiConsole.Markup("\n\n");
+
+
+			// Ask for the user's favorite fruit
+			var goBack = AnsiConsole.Prompt(
+				new SelectionPrompt<string>()
+					.Title("Select [red]Actions[/]:?")
+					.PageSize(10)
+					.MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
+					.AddChoices(new[] {
+						"Go Back"
+					}));
+		}
+	
 
 		
 
