@@ -21,6 +21,8 @@ public static class Program
 		bool exitProgram = false;
 		string notification_message = "";
 
+		// Add some sample tasks to the list
+
 		taskList.Add(new Task()
 		{
 			status = "TODO",
@@ -84,6 +86,12 @@ public static class Program
 			category = "Learn",
 		});
 
+
+
+
+
+
+
 		while (!exitProgram)
 		{
 			
@@ -95,11 +103,17 @@ public static class Program
 			new FigletText("RALDIN CASIDAR")
 				.Centered()
         .Color(Color.Green));
+
 		var rule = new Rule("TASK MANAGEMENT SYSTEM V1.1");
 		rule.Justification = Justify.Center;
 		AnsiConsole.Write(rule);
+
+
+
 		AnsiConsole.Markup("\n [lime]:information: What is this program?[/]: [white]This program is designed to manage your taskList with ease. It is designed to be a simple and efficient tool.[/] \n \n \n ");
 
+
+		// Display notification messages if they exist
 		if (notification_message != "") {
 			AnsiConsole.Markup("\n\n");
 			var panel5 = new Panel($"[green]{notification_message}[/]");
@@ -111,7 +125,9 @@ public static class Program
 			notification_message = "";
 		}
 
-		// Ask for the user's favorite fruit
+
+
+		// Ask for user action
 		var actions = AnsiConsole.Prompt(
 			new SelectionPrompt<string>()
 				.Title("Select your [red]actions[/]?")
@@ -121,10 +137,14 @@ public static class Program
 					"View/Manage Tasks", "About this Program", "Exit"
 				}));
 
+
 		if (actions == "View/Manage Tasks") {
+
+
 			// Create a table
 			var table = new Table();
 
+			// Add title some borders and 
 			table.Border = TableBorder.Rounded;
 			table.Title = new TableTitle("[lime]Undone Task[/]");
 
@@ -135,6 +155,7 @@ public static class Program
 			table.AddColumn("[yellow]Category[/]");
 			table.Expand();
 
+			// Add some rows
 			int index = 1;
 			foreach (var task in taskList) 
 			{
@@ -143,15 +164,26 @@ public static class Program
 					continue;
 				}
 
+				// If task is DONE, color is green, else red
 				string isDone = (task.status == "DONE") ? "green" : "red";
 				string isDone2 = (task.status == "DONE") ? "strikethrough" : "bold";
-				table.AddRow(new Markup(Convert.ToString(index)), new Markup($"[{isDone}][bold]{task.status}[/][/]"), new Markup($"[{isDone2}]{task.name}[/]"), new Markup($"[blue]{task.category}[/]"));
+
+
+				table.AddRow(
+					new Markup(Convert.ToString(index)), 
+					new Markup($"[{isDone}][bold]{task.status}[/][/]"), 
+					new Markup($"[{isDone2}]{task.name}[/]"), 
+					new Markup($"[blue]{task.category}[/]")
+				);
+
+
 				index++;
 			}
 
 			// Create a table
 			var table2 = new Table();
 
+			// Add title and some borders 
 			table2.Border = TableBorder.Rounded;
 			table2.Title = new TableTitle("[lime]Done Task[/]");
 
@@ -162,6 +194,7 @@ public static class Program
 			table2.AddColumn("[yellow]Category[/]");
 			table2.Expand();
 
+			// Add some rows
 			int index2 = 1;
 			foreach (var task in taskList) 
 			{
@@ -170,9 +203,20 @@ public static class Program
 					continue;
 				}
 
+
+
 				string isDone = (task.status == "DONE") ? "green" : "red";
 				string isDone2 = (task.status == "DONE") ? "strikethrough" : "bold";
-				table2.AddRow(new Markup(Convert.ToString(index2)), new Markup($"[{isDone}][bold]{task.status}[/][/]"), new Markup($"[{isDone2}]{task.name}[/]"), new Markup($"[blue]{task.category}[/]"));
+
+
+				table2.AddRow(
+					new Markup(Convert.ToString(index2)), 
+					new Markup($"[{isDone}][bold]{task.status}[/][/]"), 
+					new Markup($"[{isDone2}]{task.name}[/]"), 
+					new Markup($"[blue]{task.category}[/]")
+				);
+				
+				
 				index2++;
 			}
 
@@ -180,7 +224,7 @@ public static class Program
 			AnsiConsole.Write(table);
 			AnsiConsole.Write(table2);
 
-			// Ask for the user's favorite fruit
+			// Ask for the user's actions for the the task table
 			var otherAction = AnsiConsole.Prompt(
 				new SelectionPrompt<string>()
 					.Title("\nSelect your [red]actions[/]?")
@@ -191,10 +235,11 @@ public static class Program
 					}));
 
 			if (otherAction == "Add New Tasks") {
+
 				var task_name = AnsiConsole.Ask<string>("What's your [yellow]task[/]?");
 				var task_category = AnsiConsole.Ask<string>("What [yellow]category[/]?");
 
-				
+
 
 				taskList.Add( new Task() { name = task_name, category = task_category, status = "TODO" } );
 
@@ -202,10 +247,10 @@ public static class Program
 			}
 			
 			if (otherAction == "Mark task as done") {
-				// Ask for the user's favorite fruit
 
 				List<string> choices = new List<string>();
 
+				// Find the task that is not DONE
 				foreach(var task in taskList)
 				{
 					if (task.status == "DONE") {
@@ -217,6 +262,7 @@ public static class Program
 
 				choices.Add("Go Back");
 
+				// Ask user which task to mark as done
 				string actionToMarkDone = AnsiConsole.Prompt(
 					new SelectionPrompt<string>()
 						.Title("\nWhich task would you like to [green]MARK AS DONE[/]?")
@@ -226,6 +272,7 @@ public static class Program
 
 				if (actionToMarkDone != "Go Back") {
 					
+					// find the task selected and mark as done
 					for (int i = 0; i < taskList.Count; i++) 
 					{
 						if (taskList[i].name == actionToMarkDone) {
@@ -234,14 +281,15 @@ public static class Program
 						
 					}
 
+					// Notify user
 					notification_message = "Successfuly marked task as done!";
 
 				}
 			}
 
 			if (otherAction == "Remove Task") {
-				// Ask for the user's favorite fruit
 
+				
 				List<string> choices = new List<string>();
 
 				foreach(var task in taskList)
@@ -279,7 +327,7 @@ public static class Program
 			}
 
 			if (otherAction == "Set Priority Order") {
-				// Ask for the user's favorite fruit
+				
 
 				List<string> choices = new List<string>();
 
@@ -307,12 +355,11 @@ public static class Program
 							var new_index = Convert.ToInt32(AnsiConsole.Ask<string>($"Input priority number: [yellow](1-{taskList.Count})[/]?")) - 1;
 							var item = taskList[i];
 
+							// Remove task from list and re-insert at specific index
 							taskList.RemoveAt(i);
-
-							// if (new_index > i) new_index--; 
-							// the actual index could have shifted due to the removal
-
 							taskList.Insert(new_index, item);
+
+							// Finally stop the for loop
 							break;
 						}
 						
@@ -324,8 +371,11 @@ public static class Program
 			}
 		}
 
+
+
 		if (actions == "About this Program") {
 			
+			// Display information about this program
 			AnsiConsole.Markup("\n\n");
 			var panel6 = new Panel($"[green]This Task Management was made by [yellow]Raldin Casidar[/]. Raldin Casidar is a student at JRMSU Main Campus and this project is made in compliance to the Final Project of sir [yellow]Edgardo Olmoguez[/]. \n \nPlease contact me at [yellow]raldin.disomimba13@gmail.com[/] if you seen any problem.[/]");
 			panel6.Header = new PanelHeader("About this Program");
@@ -335,7 +385,7 @@ public static class Program
 			AnsiConsole.Markup("\n\n");
 
 
-			// Ask for the user's favorite fruit
+			// Go Back button
 			var goBack = AnsiConsole.Prompt(
 				new SelectionPrompt<string>()
 					.Title("Select [red]Actions[/]:?")
@@ -347,7 +397,6 @@ public static class Program
 		}
 	
 
-		
 
 		if (actions == "Exit") {
 			Console.Clear();
@@ -363,6 +412,7 @@ public static class Program
 			ruleExit.Justification = Justify.Center;
 			AnsiConsole.Write(ruleExit);
 			
+			// Maek exitProgram true to exit while loop
 			exitProgram = true;
 		}
 		}
